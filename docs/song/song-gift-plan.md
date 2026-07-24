@@ -1,13 +1,14 @@
-song gift 网站规划
+song gift 网站规划。
 主题：数字音乐（礼物）定制
+
 # 技术架构
-前端：nextjs
-数据库：cloudflare D1
-文件存储：cloudflare R2
-网站部署：cloudflare workers
-账户登录：google account 授权登录
-支付： creem
-AI API（音乐生成、歌词生成、图片生成）： replicate / openrouter
+- 前端：nextjs
+- 数据库：cloudflare D1
+- 文件存储：cloudflare R2
+- 网站部署：cloudflare workers
+- 账户登录：google account 授权登录
+- 支付： creem
+- AI model API（音乐生成、歌词生成、图片生成）： replicate / openrouter
 
 * * *
 
