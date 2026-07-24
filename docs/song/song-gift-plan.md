@@ -150,5 +150,5 @@ AI 工具需要消耗积分，
 前期给用户多一点免费体验积分，就是做推广了。
 
 ## 3. 外链建设
-免费外链：ProductHunt、IndieHackers 等等
-付费外链：theresanaiforthat.com，toolify.ai，creati.ai 等等 AI 目录站
+- 免费外链：ProductHunt、IndieHackers 等等
+- 付费外链：theresanaiforthat.com，toolify.ai，creati.ai 等等 AI 目录站
