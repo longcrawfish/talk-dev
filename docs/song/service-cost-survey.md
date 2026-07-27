@@ -360,10 +360,12 @@ $19.99
 [3]: https://api.sunoapi.com/en/pricing "AI Music API Pricing: Free Credits, Suno API & Producer AI"
 
 ---
+---
+---
 ## minmiax music
-https://replicate.com/minimax/music-2.6
-https://replicate.com/minimax/music-1.5
-https://replicate.com/minimax/music-01
+> https://replicate.com/minimax/music-2.6
+> https://replicate.com/minimax/music-1.5
+> https://replicate.com/minimax/music-01
 
 这几个 MiniMax Music 模型放到你的 **personalized song gift** 场景里，非常值得比较，因为它们和 SunoAPI 的商业模式差异很大。
 
@@ -773,6 +775,8 @@ $0.03            $0.15
 [3]: https://replicate.com/minimax/music-01 "MiniMax Music 01 | AI Music Generation API"
 [4]: https://replicate.com/minimax/music-2.6 "MiniMax Music 2.6 | AI Music Generation API"
 
+---
+---
 ---
 # 在 song gift 工具设计中：每次一套歌词生成 2首歌，给用户作选择；
 这种设计，如何使用上述 AI API ？
@@ -1256,6 +1260,9 @@ Song A
 这样用户体验接近“两首选择”，但你的 API 成本降低约30~50%。这对早期流量产品非常重要。
 
 ---
+---
+---
+---
 > 首歌按需生成，第二首 lazy generation —— 这个设计不错。
 > 
 > 关于假如用户不满意，需要多次重新生成音乐，这一块如何控制？
@@ -1709,7 +1716,9 @@ A daughter expressing gratitude to her mother...
 
 这样既控制成本，又符合礼物用户心理。
 
-----
+---
+---
+---
 
 # Prompt 优化方案
 
@@ -2118,7 +2127,6 @@ Rate this song from 1-10:
 ```
 
 如果：
-
 <7
 
 自动重新生成。
