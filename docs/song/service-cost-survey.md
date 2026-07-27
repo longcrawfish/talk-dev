@@ -371,9 +371,9 @@ $19.99
 
 我先看 Replicate 官方价格：
 
-* Replicate 上的 MiniMax Music 2.6：**$0.15 / 首输出音频文件**。([Replicate][1])
-* MiniMax Music 1.5：**$0.03 / 首输出音频文件**。([Replicate][2])
-* MiniMax Music-01：**$0.035 / 首输出音频文件**。([Replicate][3])
+* Replicate 上的 MiniMax Music 2.6：**$0.15 / 首输出音频文件**。([Replicate][4])
+* MiniMax Music 1.5：**$0.03 / 首输出音频文件**。([Replicate][5])
+* MiniMax Music-01：**$0.035 / 首输出音频文件**。([Replicate][6])
 
 ---
 
@@ -385,7 +385,7 @@ $19.99
 | MiniMax Music 1.5 | 最长4分钟 |       $0.03 |   3美分 |
 | MiniMax Music 2.6 | 最长6分钟 |       $0.15 |  15美分 |
 
-([Replicate][3])
+([Replicate][6])
 
 ---
 
@@ -434,7 +434,7 @@ $0.035 / generation
 
 明显不够。
 
-([Replicate][3])
+([Replicate][6])
 
 ---
 
@@ -455,7 +455,7 @@ $0.035 / generation
 $0.03/song
 ```
 
-([Replicate][2])
+([Replicate][5])
 
 你的流程：
 
@@ -498,7 +498,7 @@ gift page
 * 自动歌词
 * 更强编曲
 
-([Replicate][4])
+([Replicate][7])
 
 成本：
 
@@ -506,7 +506,7 @@ gift page
 $0.15/song
 ```
 
-([Replicate][1])
+([Replicate][4])
 
 相比1.5：
 
@@ -770,10 +770,10 @@ $0.03            $0.15
 
 它的成本几乎和 Suno 最低档接近，但完整歌曲能力更适合「礼物场景」。MiniMax 2.6 更适合作为后续 $9.99~19.99 的高端升级项。
 
-[1]: https://replicate.com/minimax/music-2.6/api "minimax/music-2.6 | Get started"
-[2]: https://replicate.com/minimax/music-1.5 "MiniMax Music 1.5 | AI Music Generation API"
-[3]: https://replicate.com/minimax/music-01 "MiniMax Music 01 | AI Music Generation API"
-[4]: https://replicate.com/minimax/music-2.6 "MiniMax Music 2.6 | AI Music Generation API"
+[4]: https://replicate.com/minimax/music-2.6/api "minimax/music-2.6 | Get started"
+[5]: https://replicate.com/minimax/music-1.5 "MiniMax Music 1.5 | AI Music Generation API"
+[6]: https://replicate.com/minimax/music-01 "MiniMax Music 01 | AI Music Generation API"
+[7]: https://replicate.com/minimax/music-2.6 "MiniMax Music 2.6 | AI Music Generation API"
 
 ---
 ---

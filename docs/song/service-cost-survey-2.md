@@ -573,7 +573,7 @@ Worker Consumer
 
 它的成本其实非常低，尤其你的场景（每个任务几十 KB 消息）。
 
-Cloudflare Queues 按 **operation（操作次数）** 计费，而不是按任务时间计费。一个 operation 指 **64KB 数据的写入、读取或删除**。([Cloudflare Docs][1])
+Cloudflare Queues 按 **operation（操作次数）** 计费，而不是按任务时间计费。一个 operation 指 **64KB 数据的写入、读取或删除**。([Cloudflare Docs][4])
 
 ---
 
@@ -593,7 +593,7 @@ Cloudflare Queues 按 **operation（操作次数）** 计费，而不是按任�
 24小时
 ```
 
-([Cloudflare Docs][2])
+([Cloudflare Docs][5])
 
 ---
 
@@ -623,7 +623,7 @@ $0.40 / million operations
 14天
 ```
 
-([Cloudflare Docs][1])
+([Cloudflare Docs][4])
 
 ---
 
@@ -690,7 +690,7 @@ Consumer Worker
 ≈3 operations / task
 ```
 
-([Cloudflare Docs][3])
+([Cloudflare Docs][6])
 
 ---
 
@@ -840,7 +840,7 @@ retry
 
 增加 read operation。
 
-([Cloudflare Docs][3])
+([Cloudflare Docs][6])
 
 所以：
 
@@ -1150,6 +1150,6 @@ MiniMax Music
 
 我认为 Queue 是非常值得加入的。
 
-[1]: https://developers.cloudflare.com/workers/platform/pricing/ "Pricing · Cloudflare Workers docs"
-[2]: https://developers.cloudflare.com/changelog/post/2026-02-04-queues-free-plan/ "Cloudflare Queues now available on Workers Free plan · Changelog"
-[3]: https://developers.cloudflare.com/queues/platform/pricing/ "Cloudflare Queues - Pricing · Cloudflare Queues docs"
+[4]: https://developers.cloudflare.com/workers/platform/pricing/ "Pricing · Cloudflare Workers docs"
+[5]: https://developers.cloudflare.com/changelog/post/2026-02-04-queues-free-plan/ "Cloudflare Queues now available on Workers Free plan · Changelog"
+[6]: https://developers.cloudflare.com/queues/platform/pricing/ "Cloudflare Queues - Pricing · Cloudflare Queues docs"
