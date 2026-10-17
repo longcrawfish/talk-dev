@@ -191,7 +191,82 @@ PocketShell 的主题与终端内开发工具的主题是两层设置。若普�
 3. 如果工具明确支持 `NO_COLOR`，可对单次启动测试 `NO_COLOR=1`；它不是所有工具通用的开关，也不保证移除所有背景色。不要直接写入全局 shell 配置。
 4. 分别检查普通对话、代码块、选中文字、输入提示和 Git 差异。不能只看一段普通文本就认为全部配色已修复。
 
-## 7. 验收与恢复
+## 7. 手机使用结束后释放 tmux 尺寸控制
+
+### 7.1 原因与适用情况
+
+如果手机使用结束后，电脑重新连接同一 tmux 会话仍然保持窄屏布局，而且放大电脑终端无效，应检查窗口是否处于 `manual` 尺寸模式。
+
+2026-10-17 本机只读检查发现：`talk` 客户端为 120×35，但 `talk:0` 窗口仍为 38×13；`talk:0` 和 `filtora:0` 的窗口级 `window-size` 均为 `manual`，全局默认则为 `latest`。窗口级设置覆盖了全局默认。
+
+已查阅的 PocketShell 上游 `terminal.ts` 在调整尺寸时调用 `tmux resize-window`；根据 tmux 手册，这个命令会将窗口尺寸策略自动改为 `manual`。关闭手机网页不会自动撤销这一窗口设置。该调用机制依据上游源码，尚未逐行核对本机安装版本。
+
+### 7.2 推荐操作：关闭手机连接，再在电脑恢复自动尺寸
+
+1. 手机使用结束后，关闭打开 PocketShell 的浏览器标签页或 PWA 窗口；如有多个入口，全部关闭。仅切到后台或锁屏不作为已断开的依据。不要在运行任务的 shell 中输入 `exit`，也不要删除 tmux 会话。
+2. 在电脑的普通终端中连接原会话，例如：
+
+   ```bash
+   tmux attach-session -t talk
+   ```
+
+   如果电脑已经在该会话中，跳过这一步。
+
+3. 在 shell 提示符执行以下命令，将受影响窗口恢复为跟随最近活动客户端的尺寸：
+
+   ```bash
+   tmux set-window-option -t talk:0 window-size latest
+   ```
+
+   `talk:0` 表示 `talk` 会话的第 0 个窗口；请替换为实际受影响的窗口。每个窗口有独立设置，其他受影响窗口需要分别恢复。
+
+4. 如果当前正在运行 Codex、编辑器等全屏程序，不必退出程序，也不要把上述 shell 命令输入到程序的对话框。可按 tmux 前缀键（默认 `Ctrl+b`），松开后按 `:`，在 tmux 命令行输入：
+
+   ```text
+   set-window-option window-size latest
+   ```
+
+   这里省略目标，作用于当前窗口，且不带开头的 `tmux`。
+
+5. 再次调整电脑终端大小，按第 7.4 节验证。该操作调整窗口尺寸策略，不会终止会话中的任务。
+
+关闭手机连接后再恢复策略，可以减少手机端后续尺寸消息把窗口重新设回 `manual` 的机会。
+
+### 7.3 在手机上先释放的操作方法与限制
+
+如果手机界面可以发送 tmux 前缀键，可以在离开前先按默认 `Ctrl+b`，松开后按 `:`，输入 `set-window-option window-size latest` 并回车。若已修改 tmux 前缀键，使用实际配置。处于 shell 提示符时，也可以执行 `tmux set-window-option window-size latest`，作用于当前窗口。
+
+执行后随即关闭 PocketShell 标签页或 PWA 窗口。此时手机仍是最近活动客户端，画面暂时保持手机尺寸是正常的；电脑接入并产生交互后，再检查是否恢复。
+
+**这不是 PocketShell 已实现的专用“释放控制”功能。** 手机键盘展开、收起、屏幕旋转或重新连接，都可能触发新的尺寸同步，再次将窗口设为 `manual`。因此手机端先释放只能作为便利操作，若电脑仍保持窄屏，以第 7.2 节的电脑端恢复为准。也不要仅依赖 `Ctrl+b d`：断开 tmux 客户端本身不会清除窗口的 `manual` 设置。
+
+### 7.4 验证与重复发生时的处理
+
+在电脑的 shell 提示符执行：
+
+```bash
+# 查看连接到 tmux 的客户端及其尺寸
+tmux list-clients -F '#{client_name} session=#{session_name} size=#{client_width}x#{client_height}'
+
+# 查看受影响窗口的有效尺寸策略
+tmux show-options -w -v -t talk:0 window-size
+
+# 查看窗口实际尺寸
+tmux list-windows -t talk -F '#{window_index}: #{window_width}x#{window_height}'
+```
+
+预期策略显示 `latest`，窗口宽高随电脑终端变化；状态栏会占用行数，窗口高度不必与客户端完全相同。以新输出和程序重绘后的布局判断是否恢复，旧输出里的硬换行不一定消失。
+
+如果仍有不需要的客户端，先核对 `list-clients` 中的客户端路径和对应连接，确认后只断开指定客户端，例如 `tmux detach-client -t /dev/pts/NN`（将路径替换为实际值），再恢复窗口策略。不要批量断开其他正在使用的电脑终端。
+
+另外两点容易误判：
+
+- 仅执行 `tmux set-window-option -g window-size latest` 只修改全局默认，不能覆盖已有窗口的 `manual`。若希望窗口继承全局策略，应先确认全局值为 `latest`，再执行 `tmux set-window-option -u -t talk:0 window-size`，删除该窗口的独立设置。
+- `tmux resize-window -A` 只做一次尺寸调整，而且仍会进入 `manual`，不等于恢复持续自动适配。
+
+如果每次手机访问后都会复现，需要修改 PocketShell 的尺寸控制生命周期：接管时保存原窗口策略，在最后一个控制该窗口的移动连接释放后恢复，并处理断线重连和多客户端竞争。本文提供的是手动恢复步骤，本次没有修改 Agent 或应用任何 tmux 配置。
+
+## 8. 验收与恢复
 
 | 场景 | 通过标准 |
 | --- | --- |
@@ -200,6 +275,7 @@ PocketShell 的主题与终端内开发工具的主题是两层设置。若普�
 | 设置说明与底部按钮 | 可辨认文字，按钮完整且可点击 |
 | 输入与滚动 | 键盘不挡输入区，刷新速度可接受，残影可通过刷新消除 |
 | 返回页面 | 锁屏或切换应用后，字号、主题与布局仍符合预期 |
+| 手机切回电脑 | 释放尺寸控制后，tmux 窗口随电脑终端大小变化 |
 
 建议记录最终采用的 PocketShell 字号、主题、浏览器缩放、Bigme 刷新模式，以及仍有问题的具体区域。当前推荐起点是：**字号 18 + 浅色主题 + 偏清晰的刷新模式 + 浏览器缩放 100%**，之后逐项调整。
 
@@ -213,5 +289,7 @@ PocketShell 的主题与终端内开发工具的主题是两层设置。若普�
 - [设置界面源码](https://github.com/Big-Pony/pocketshell/blob/main/app/src/components/SettingsPanel.svelte)：字号范围、主题导入、独立界面字号。
 - [主题解析与界面配色生成](https://github.com/Big-Pony/pocketshell/blob/main/agent/src/theme-derive.ts)：主题字段与 16 色调色板要求。
 - [内置浅色主题](https://github.com/Big-Pony/pocketshell/blob/main/app/themes/cream-light.ghostty)：配色文件格式参考。
+- [PocketShell 终端管理源码](https://github.com/Big-Pony/pocketshell/blob/main/agent/src/terminal.ts)：尺寸同步中的 `resize-window` 调用。
+- [tmux 手册](https://man.openbsd.org/tmux.1)：`resize-window`、`window-size`、窗口级设置与客户端管理。
 
 以上链接指向上游 main，后续可能变化。设备刷新与浏览器缩放数值是建议试验值，尚未在 Bigme HiBreak S Color + 当前 Brave Nightly 版本上验证。
